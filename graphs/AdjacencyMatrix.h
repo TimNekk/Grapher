@@ -1,10 +1,5 @@
-//
-// Created by herew on 08.05.2022.
-//
-
 #ifndef GRAPHER_ADJACENCYMATRIX_H
 #define GRAPHER_ADJACENCYMATRIX_H
-
 
 #include "Graph.h"
 #include "vector"
@@ -53,4 +48,4 @@ public:
 };
 
 
-#endif //GRAPHER_ADJACENCYMATRIX_H
+#endif
