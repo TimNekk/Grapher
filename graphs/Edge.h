@@ -1,10 +1,5 @@
-//
-// Created by herew on 08.05.2022.
-//
-
 #ifndef GRAPHER_EDGE_H
 #define GRAPHER_EDGE_H
-
 
 struct Edge {
     unsigned int start;
@@ -20,7 +15,11 @@ struct Edge {
         }
         return start < other.start;
     }
+
+    [[nodiscard]] bool IsArcWith(const Edge& other) const {
+        return start == other.end && end == other.start;
+    }
 };
 
 
-#endif //GRAPHER_EDGE_H
+#endif
