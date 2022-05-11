@@ -1,10 +1,5 @@
-//
-// Created by herew on 08.05.2022.
-//
-
 #ifndef GRAPHER_GRAPH_H
 #define GRAPHER_GRAPH_H
-
 
 #include <set>
 #include "Edge.h"
@@ -14,11 +9,13 @@ class Graph {
 public:
     std::set<Edge> edges;
     unsigned int vertices_count;
+    bool is_directed;
 
 public:
     explicit Graph(const std::set<Edge> &_edges) {
         edges = _edges;
         vertices_count = GetVerticesCount();
+        is_directed = CheckDirectionality();
     }
 
     friend std::ostream &operator<<(std::ostream &os, const Graph &graph) {
@@ -46,14 +43,6 @@ public:
         return count;
     }
 
-    unsigned int GetDegree(unsigned int vertex) {
-        if (!HasVertex(vertex)) {
-            throw std::invalid_argument("Wrong vertex passed");
-        }
-
-        return GetInDegree(vertex) + GetOutDegree(vertex);
-    }
-
     unsigned int GetOutDegree(unsigned int vertex) {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
@@ -68,7 +57,34 @@ public:
         return count;
     }
 
+    unsigned int GetDegree(unsigned int vertex) {
+        if (!HasVertex(vertex)) {
+            throw std::invalid_argument("Wrong vertex passed");
+        }
+
+        return GetInDegree(vertex) + GetOutDegree(vertex);
+    }
+
 private:
+    bool CheckDirectionality() {
+        for (auto edge1 : edges) {
+            bool found = false;
+
+            for (const auto& edge2 : edges) {
+                if (edge1.IsArcWith(edge2)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     unsigned int GetVerticesCount() {
         unsigned int max_vertex = 0;
         for (const Edge &edge: edges) {
@@ -77,10 +93,10 @@ private:
         return max_vertex;
     }
 
-    bool HasVertex(unsigned int vertex) {
+    bool HasVertex(unsigned int vertex) const {
         return vertex != 0 && vertex <= vertices_count;
     }
 };
 
 
-#endif //GRAPHER_GRAPH_H
+#endif
