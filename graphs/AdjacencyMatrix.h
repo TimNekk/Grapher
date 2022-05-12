@@ -5,7 +5,7 @@
 #include "vector"
 
 
-class AdjacencyMatrix : Graph {
+class AdjacencyMatrix : public Graph {
 public:
     std::vector<std::vector<bool>> matrix;
 
@@ -44,7 +44,6 @@ public:
 
         return os;
     }
-
 };
 
 
