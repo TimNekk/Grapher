@@ -8,14 +8,19 @@
 class Graph {
 public:
     std::set<Edge> edges;
-    unsigned int vertices_count;
     bool is_directed;
+
+    unsigned int vertices_count;
+    unsigned int edges_count;
+    unsigned int arcs_count;
 
 public:
     explicit Graph(const std::set<Edge> &_edges) {
         edges = _edges;
         vertices_count = GetVerticesCount();
         is_directed = CheckDirectionality();
+        edges_count = edges.size();
+        arcs_count = GetArcsCount();
     }
 
     friend std::ostream &operator<<(std::ostream &os, const Graph &graph) {
@@ -29,7 +34,7 @@ public:
         return os;
     }
 
-    unsigned int GetInDegree(unsigned int vertex) {
+    [[nodiscard]] unsigned int GetInDegree(unsigned int vertex) const {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
         }
@@ -38,12 +43,12 @@ public:
 
         for (const Edge& edge : edges) {
             count += edge.end == vertex;
-        }
+        } 
 
         return count;
     }
 
-    unsigned int GetOutDegree(unsigned int vertex) {
+    [[nodiscard]] unsigned int GetOutDegree(unsigned int vertex) const {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
         }
@@ -57,7 +62,7 @@ public:
         return count;
     }
 
-    unsigned int GetDegree(unsigned int vertex) {
+    [[nodiscard]] unsigned int GetDegree(unsigned int vertex) const {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
         }
@@ -66,6 +71,23 @@ public:
     }
 
 private:
+    unsigned int GetArcsCount() {
+        unsigned int count = 0;
+
+        for (auto edge1 : edges) {
+            bool found = false;
+
+            for (const auto& edge2 : edges) {
+                if (edge1.IsArcWith(edge2)) {
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        return count / 2;
+    }
+
     bool CheckDirectionality() {
         for (auto edge1 : edges) {
             bool found = false;
