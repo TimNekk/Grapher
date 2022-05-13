@@ -10,14 +10,7 @@ public:
 
 public:
     explicit IncidenceMatrix(const std::set<Edge> &_edges) : Graph(_edges) {
-        for (unsigned int i = 0; i < vertices_count; ++i) {
-            std::vector<int> row;
-            row.reserve(vertices_count);
-            for (int j = 0; j < edges_count - arcs_count; ++j) {
-                row.push_back(0);
-            }
-            matrix.push_back(row);
-        }
+        matrix = Utilities::FillVector2D(vertices_count, edges_count - arcs_count, 0);
 
         std::set<Edge> added_edges;
         unsigned int count = 0;
