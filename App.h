@@ -3,9 +3,11 @@
 
 
 #include <iostream>
+#include "Utilities.h"
 #include "graphs/Graph.h"
 #include "graphs/AdjacencyMatrix.h"
 #include "graphs/IncidenceMatrix.h"
+#include "graphs/AdjacencyList.h"
 
 class App {
 public:
@@ -67,6 +69,11 @@ public:
                 std::cout << "Representation as Incidence matrix\n\n" << IncidenceMatrix::FromGraph(graph);
                 break;
             }
+            case 5:
+            {
+                std::cout << "Representation as Adjacency list\n\n" << AdjacencyList::FromGraph(graph);
+                break;
+            }
         }
     }
 
@@ -97,7 +104,6 @@ public:
         unsigned int vertex_count, edges_count;
         int exist;
         std::set<Edge> edges;
-        std::vector<std::vector<int>> matrix;
 
         std::cout << "Enter the number of vertices:\n";
         std::cin >> vertex_count;
@@ -105,14 +111,7 @@ public:
         std::cin >> edges_count;
         std::cout << "Enter the incidence matrix of size (" << vertex_count << "x" << edges_count << "):\n";
 
-        for (unsigned int i = 0; i < vertex_count; ++i) {
-            std::vector<int> row;
-            row.reserve(edges_count);
-            for (int j = 0; j < edges_count; ++j) {
-                row.push_back(0);
-            }
-            matrix.push_back(row);
-        }
+        std::vector<std::vector<int>> matrix = Utilities::FillVector2D(vertex_count, edges_count, 0);
 
         for (unsigned int i = 0; i < vertex_count; ++i) {
             for (unsigned int j = 0; j < edges_count; ++j) {
@@ -144,6 +143,24 @@ public:
         }
 
         IncidenceMatrix graph {edges};
+        return graph;
+    }
+
+    static AdjacencyList GetAdjacencyList() {
+        unsigned int edges_count;
+        unsigned int start, end;
+        std::set<Edge> edges;
+
+        std::cout << "Enter the number of edges:\n";
+        std::cin >> edges_count;
+        std::cout << "Enter " << edges_count << " pairs of start and end (e.g. 2 3):\n";
+
+        for (int i = 0; i < edges_count; ++i) {
+            std::cin >> start >> end;
+            edges.insert({start, end});
+        }
+
+        AdjacencyList graph {edges};
         return graph;
     }
 };
