@@ -12,12 +12,38 @@
 #include "graphs/EdgesList.h"
 
 class App {
-public:
-    static void InputGraph() {
-        std::cout << "1) From console\n2)From file\n\nEnter input type:\n";
+private:
+    std::string input_file_name, output_file_name;
 
+public:
+    App(const std::string _input_file_name, const std::string _output_file_name) {
+        input_file_name = _input_file_name;
+        output_file_name = _output_file_name;
+    }
+
+    void Start() {
+        while (true) {
+            Graph graph = GetGraph();
+
+            bool continue_actions = true;
+            while (continue_actions) {
+                std::cout << "\n\n";
+                unsigned int action = GetAction(graph);
+                continue_actions = DoAction(action, graph);
+            }
+
+            break;
+        }
+    }
+
+private:
+
+    Graph GetGraph() {
+        std::cout << "1) From console\n2) From file\n\nEnter input type:\n";
         unsigned int input_type;
         std::cin >> input_type;
+        std::ifstream file_stream(input_file_name);
+        std::istream &stream = input_type == 1 ? std::cin : file_stream;
 
         std::cout << "\n\n1) Input as Adjacency matrix\n";
         std::cout << "2) Input as Incidence matrix\n";
@@ -27,9 +53,24 @@ public:
 
         unsigned int graph_type;
         std::cin >> graph_type;
+
+        switch (graph_type) {
+            case 1: {
+                return GetAdjacencyMatrix(stream);
+            }
+            case 2: {
+                return GetIncidenceMatrix(stream);
+            }
+            case 3: {
+                return GetAdjacencyList(stream);
+            }
+            case 4: {
+                return GetEdgesList(stream);
+            }
+        }
     }
 
-    static void ShowMenu(const Graph& graph) {
+    static unsigned int GetAction(const Graph& graph) {
         std::cout << "Options:\n";
 
         if (graph.is_directed) {
@@ -44,16 +85,17 @@ public:
         std::cout << "4) Show as Incidence matrix\n";
         std::cout << "5) Show as Adjacency list\n";
         std::cout << "6) Show as Edges list\n";
-
         std::cout << "7) Enter new graph\n";
-
         std::cout << "\nEnter the option number:\n";
+
+        unsigned int action;
+        std::cin >> action;
+        return action;
     }
 
-    static void DoAction(unsigned int action, const Graph& graph) {
+    bool DoAction(unsigned int action, const Graph& graph) {
         switch (action) {
-            case 1:
-            {
+            case 1: {
                 std::cout << "Enter vertex:\n";
 
                 unsigned int vertex;
@@ -66,52 +108,62 @@ public:
                 } else {
                     std::cout << "Degree = " << graph.GetDegree(vertex) << '\n';
                 }
-                break;
+                return true;
             }
-            case 2:
-            {
+            case 2: {
                 if (graph.is_directed) {
                     std::cout << "Arcs count = " << graph.arcs_count << '\n';
                 } else {
                     std::cout << "Edges count = " << graph.edges_count << '\n';
                 }
-                break;
+                return true;
             }
-            case 3:
-            {
-                std::cout << "Representation as Adjacency matrix\n\n" << AdjacencyMatrix::FromGraph(graph);
-                break;
+            case 3: {
+                OutputGraph(AdjacencyMatrix::FromGraph(graph));
+                return true;
             }
-            case 4:
-            {
-                std::cout << "Representation as Incidence matrix\n\n" << IncidenceMatrix::FromGraph(graph);
-                break;
+            case 4: {
+                OutputGraph(IncidenceMatrix::FromGraph(graph));;
+                return true;
             }
-            case 5:
-            {
-                std::cout << "Representation as Adjacency list\n\n" << AdjacencyList::FromGraph(graph);
-                break;
+            case 5: {
+                OutputGraph(AdjacencyList::FromGraph(graph));
+                return true;
             }
-            case 6:
-            {
-                std::cout << "Representation as Edges list\n\n" << EdgesList::FromGraph(graph);
-                break;
+            case 6: {
+                OutputGraph(EdgesList::FromGraph(graph));
+                return true;
+            }
+            case 7: {
+                return false;
             }
         }
+        return true;
     }
 
-    static AdjacencyMatrix GetAdjacencyMatrix() {
+    template<class GraphType>
+    void OutputGraph(const GraphType& graph) {
+        std::cout << "1) To console\n2) To file\n\nEnter output type:\n";
+        unsigned int output_type;
+        std::cin >> output_type;
+        std::ofstream file_stream(output_file_name);
+        std::ostream &stream = output_type == 1 ? std::cout : file_stream;
+
+        stream << "Representation as " << typeid(GraphType).name() << "\n\n" << graph;
+    }
+
+    static AdjacencyMatrix GetAdjacencyMatrix(std::istream &stream) {
         unsigned int vertex_count;
         unsigned int exist;
         std::set<Edge> edges;
 
         std::cout << "Enter the number of vertices:\n";
-        std::cin >> vertex_count;
+        stream >> vertex_count;
         std::cout << "Enter the adjacency matrix of size (" << vertex_count << "x" << vertex_count << "):\n";
 
         for (unsigned int i = 0; i < vertex_count; ++i) {
             for (unsigned int j = 0; j < vertex_count; ++j) {
-                std::cin >> exist;
+                stream >> exist;
 
                 if (exist == 1) {
                     edges.insert({i + 1, j + 1});
@@ -123,22 +175,22 @@ public:
         return graph;
     }
 
-    static IncidenceMatrix GetIncidenceMatrix() {
+    static IncidenceMatrix GetIncidenceMatrix(std::istream &stream) {
         unsigned int vertex_count, edges_count;
         int exist;
         std::set<Edge> edges;
 
         std::cout << "Enter the number of vertices:\n";
-        std::cin >> vertex_count;
+        stream >> vertex_count;
         std::cout << "Enter the number of edges/arcs:\n";
-        std::cin >> edges_count;
+        stream >> edges_count;
         std::cout << "Enter the incidence matrix of size (" << vertex_count << "x" << edges_count << "):\n";
 
         std::vector<std::vector<int>> matrix = Utilities::FillVector2D(vertex_count, edges_count, 0);
 
         for (unsigned int i = 0; i < vertex_count; ++i) {
             for (unsigned int j = 0; j < edges_count; ++j) {
-                std::cin >> exist;
+                stream >> exist;
                 matrix[i][j] = exist;
             }
         }
@@ -169,17 +221,17 @@ public:
         return graph;
     }
 
-    static AdjacencyList GetAdjacencyList() {
+    static AdjacencyList GetAdjacencyList(std::istream &stream) {
         unsigned int edges_count;
         unsigned int start, end;
         std::set<Edge> edges;
 
         std::cout << "Enter the number of edges:\n";
-        std::cin >> edges_count;
+        stream >> edges_count;
         std::cout << "Enter " << edges_count << " pairs of start and end (e.g. 2 3):\n";
 
         for (int i = 0; i < edges_count; ++i) {
-            std::cin >> start >> end;
+            stream >> start >> end;
             edges.insert({start, end});
         }
 
@@ -187,20 +239,20 @@ public:
         return graph;
     }
 
-    static EdgesList GetEdgesList() {
+    static EdgesList GetEdgesList(std::istream &stream) {
         unsigned int vertices_count;
         unsigned int count, vertex;
         std::set<Edge> edges;
 
         std::cout << "Enter the number of vertices:\n";
-        std::cin >> vertices_count;
+        stream >> vertices_count;
 
         for (unsigned int i = 0; i < vertices_count; ++i) {
             std::cout << "Enter the number of connected vertices and the vertices themselves for vertex #" << i + 1 << ":\n";
-            std::cin >> count;
+            stream >> count;
 
             for (unsigned int j = 0; j < count; ++j) {
-                std::cin >> vertex;
+                stream >> vertex;
                 edges.insert({i + 1, vertex});
             }
         }
