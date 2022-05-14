@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <fstream>
 #include "Utilities.h"
 #include "graphs/Graph.h"
 #include "graphs/AdjacencyMatrix.h"
@@ -12,6 +13,22 @@
 
 class App {
 public:
+    static void InputGraph() {
+        std::cout << "1) From console\n2)From file\n\nEnter input type:\n";
+
+        unsigned int input_type;
+        std::cin >> input_type;
+
+        std::cout << "\n\n1) Input as Adjacency matrix\n";
+        std::cout << "2) Input as Incidence matrix\n";
+        std::cout << "3) Input as Adjacency list\n";
+        std::cout << "4) Input as Edges list\n";
+        std::cout << "\nEnter the graph type number:\n";
+
+        unsigned int graph_type;
+        std::cin >> graph_type;
+    }
+
     static void ShowMenu(const Graph& graph) {
         std::cout << "Options:\n";
 
