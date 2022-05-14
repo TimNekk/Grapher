@@ -2,7 +2,6 @@
 #define GRAPHER_ADJACENCYLIST_H
 
 #include "Graph.h"
-#include "vector"
 
 class AdjacencyList : public Graph {
 public:
