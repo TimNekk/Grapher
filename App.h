@@ -8,6 +8,7 @@
 #include "graphs/AdjacencyMatrix.h"
 #include "graphs/IncidenceMatrix.h"
 #include "graphs/AdjacencyList.h"
+#include "graphs/EdgesList.h"
 
 class App {
 public:
@@ -72,6 +73,11 @@ public:
             case 5:
             {
                 std::cout << "Representation as Adjacency list\n\n" << AdjacencyList::FromGraph(graph);
+                break;
+            }
+            case 6:
+            {
+                std::cout << "Representation as Edges list\n\n" << EdgesList::FromGraph(graph);
                 break;
             }
         }
@@ -161,6 +167,28 @@ public:
         }
 
         AdjacencyList graph {edges};
+        return graph;
+    }
+
+    static EdgesList GetEdgesList() {
+        unsigned int vertices_count;
+        unsigned int count, vertex;
+        std::set<Edge> edges;
+
+        std::cout << "Enter the number of vertices:\n";
+        std::cin >> vertices_count;
+
+        for (unsigned int i = 0; i < vertices_count; ++i) {
+            std::cout << "Enter the number of connected vertices and the vertices themselves for vertex #" << i + 1 << ":\n";
+            std::cin >> count;
+
+            for (unsigned int j = 0; j < count; ++j) {
+                std::cin >> vertex;
+                edges.insert({i + 1, vertex});
+            }
+        }
+
+        EdgesList graph {edges};
         return graph;
     }
 };
