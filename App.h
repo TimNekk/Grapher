@@ -31,8 +31,6 @@ public:
                 unsigned int action = GetAction(graph);
                 continue_actions = DoAction(action, graph);
             }
-
-            break;
         }
     }
 
@@ -86,6 +84,7 @@ private:
         std::cout << "5) Show as Adjacency list\n";
         std::cout << "6) Show as Edges list\n";
         std::cout << "7) Enter new graph\n";
+        std::cout << "8) Stop program\n";
         std::cout << "\nEnter the option number:\n";
 
         unsigned int action;
@@ -96,7 +95,7 @@ private:
     bool DoAction(unsigned int action, const Graph& graph) {
         switch (action) {
             case 1: {
-                std::cout << "Enter vertex:\n";
+                std::cout << "Enter vertex (1-" << graph.vertices_count << "):\n";
 
                 unsigned int vertex;
                 std::cin >> vertex;
@@ -136,6 +135,9 @@ private:
             }
             case 7: {
                 return false;
+            }
+            case 8: {
+                exit(0);
             }
         }
         return true;
