@@ -41,9 +41,9 @@ public:
 
         unsigned int count = 0;
 
-        for (const Edge& edge : edges) {
+        for (const Edge &edge: edges) {
             count += edge.end == vertex;
-        } 
+        }
 
         return count;
     }
@@ -55,7 +55,7 @@ public:
 
         unsigned int count = 0;
 
-        for (const Edge& edge : edges) {
+        for (const Edge &edge: edges) {
             count += edge.start == vertex;
         }
 
@@ -74,10 +74,10 @@ private:
     unsigned int GetArcsCount() {
         unsigned int count = 0;
 
-        for (auto edge1 : edges) {
+        for (auto edge1: edges) {
             bool found = false;
 
-            for (const auto& edge2 : edges) {
+            for (const auto &edge2: edges) {
                 if (edge1.IsArcWith(edge2)) {
                     count++;
                     break;
@@ -89,10 +89,10 @@ private:
     }
 
     bool CheckDirectionality() {
-        for (auto edge1 : edges) {
+        for (auto edge1: edges) {
             bool found = false;
 
-            for (const auto& edge2 : edges) {
+            for (const auto &edge2: edges) {
                 if (edge1.IsArcWith(edge2)) {
                     found = true;
                     break;

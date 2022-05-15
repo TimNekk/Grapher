@@ -16,7 +16,7 @@ private:
     std::string input_file_name, output_file_name;
 
 public:
-    App(const std::string& _input_file_name, const std::string& _output_file_name) {
+    App(const std::string &_input_file_name, const std::string &_output_file_name) {
         input_file_name = _input_file_name;
         output_file_name = _output_file_name;
     }
@@ -68,7 +68,7 @@ private:
         }
     }
 
-    static unsigned int GetAction(const Graph& graph) {
+    static unsigned int GetAction(const Graph &graph) {
         std::cout << "Options:\n";
 
         if (graph.is_directed) {
@@ -92,7 +92,7 @@ private:
         return action;
     }
 
-    bool DoAction(unsigned int action, const Graph& graph) {
+    bool DoAction(unsigned int action, const Graph &graph) {
         switch (action) {
             case 1: {
                 std::cout << "Enter vertex (1-" << graph.vertices_count << "):\n";
@@ -144,7 +144,7 @@ private:
     }
 
     template<class GraphType>
-    void OutputGraph(const GraphType& graph) {
+    void OutputGraph(const GraphType &graph) {
         std::cout << "1) To console\n2) To file\n\nEnter output type:\n";
         unsigned int output_type;
         std::cin >> output_type;
@@ -173,7 +173,7 @@ private:
             }
         }
 
-        AdjacencyMatrix graph {edges};
+        AdjacencyMatrix graph{edges};
         return graph;
     }
 
@@ -219,7 +219,7 @@ private:
             }
         }
 
-        IncidenceMatrix graph {edges};
+        IncidenceMatrix graph{edges};
         return graph;
     }
 
@@ -237,7 +237,7 @@ private:
             edges.insert({start, end});
         }
 
-        AdjacencyList graph {edges};
+        AdjacencyList graph{edges};
         return graph;
     }
 
@@ -250,7 +250,8 @@ private:
         stream >> vertices_count;
 
         for (unsigned int i = 0; i < vertices_count; ++i) {
-            std::cout << "Enter the number of connected vertices and the vertices themselves for vertex #" << i + 1 << ":\n";
+            std::cout << "Enter the number of connected vertices and the vertices themselves for vertex #" << i + 1
+                      << ":\n";
             stream >> count;
 
             for (unsigned int j = 0; j < count; ++j) {
@@ -259,7 +260,7 @@ private:
             }
         }
 
-        EdgeList graph {edges};
+        EdgeList graph{edges};
         return graph;
     }
 };

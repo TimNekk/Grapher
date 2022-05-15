@@ -16,7 +16,7 @@ struct Edge {
         return start < other.start;
     }
 
-    [[nodiscard]] bool IsArcWith(const Edge& other) const {
+    [[nodiscard]] bool IsArcWith(const Edge &other) const {
         return start == other.end && end == other.start;
     }
 };

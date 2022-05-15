@@ -26,10 +26,10 @@ public:
     }
 
     friend std::ostream &operator<<(std::ostream &os, const EdgeList &graph) {
-        for (const auto &[start, ends] : graph.map) {
+        for (const auto &[start, ends]: graph.map) {
             os << start << ") ";
 
-            for (const auto end : ends) {
+            for (const auto end: ends) {
                 os << end << ", ";
             }
 
