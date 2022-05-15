@@ -99,26 +99,11 @@ private:
     bool DoAction(unsigned int action, const Graph &graph) {
         switch (action) {
             case 1: {
-                std::cout << "Enter vertex (1-" << graph.vertices_count << "):\n";
-
-                unsigned int vertex;
-                std::cin >> vertex;
-                std::cout << '\n';
-
-                if (graph.is_directed) {
-                    std::cout << "Indegree = " << graph.GetInDegree(vertex) << '\n';
-                    std::cout << "Outdegree = " << graph.GetOutDegree(vertex) << '\n';
-                } else {
-                    std::cout << "Degree = " << graph.GetDegree(vertex) << '\n';
-                }
+                OutputDegree(graph);
                 return true;
             }
             case 2: {
-                if (graph.is_directed) {
-                    std::cout << "Arcs count = " << graph.arcs_count << '\n';
-                } else {
-                    std::cout << "Edges count = " << graph.edges_count << '\n';
-                }
+                OutputGraph(graph);
                 return true;
             }
             case 3: {
@@ -145,6 +130,31 @@ private:
             }
         }
         return true;
+    }
+
+    // Outputs degree of given graph
+    static void OutputDegree(const Graph &graph) {
+        std::cout << "Enter vertex (1-" << graph.vertices_count << "):\n";
+
+        unsigned int vertex;
+        std::cin >> vertex;
+        std::cout << '\n';
+
+        if (graph.is_directed) {
+            std::cout << "Indegree = " << graph.GetInDegree(vertex) << '\n';
+            std::cout << "Outdegree = " << graph.GetOutDegree(vertex) << '\n';
+        } else {
+            std::cout << "Degree = " << graph.GetDegree(vertex) << '\n';
+        }
+    }
+
+    // Outputs edges/arcs of given graph
+    void OutputEdgesOrArcs(const Graph &graph) {
+        if (graph.is_directed) {
+            std::cout << "Arcs count = " << graph.arcs_count << '\n';
+        } else {
+            std::cout << "Edges count = " << graph.edges_count << '\n';
+        }
     }
 
     // Outputs given graph to console of file
