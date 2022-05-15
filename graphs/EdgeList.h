@@ -10,6 +10,7 @@ public:
     std::map<unsigned int, std::set<unsigned int>> map;
 
 public:
+    // Constructor
     explicit EdgeList(const std::set<Edge> &_edges) : Graph(_edges) {
         for (const Edge &edge: _edges) {
             if (map.contains(edge.start)) {
@@ -20,11 +21,13 @@ public:
         }
     }
 
+    // Converting from graph
     static EdgeList FromGraph(const Graph &graph) {
         EdgeList edge_list{graph.edges};
         return edge_list;
     }
 
+    // Output override
     friend std::ostream &operator<<(std::ostream &os, const EdgeList &graph) {
         for (const auto &[start, ends]: graph.map) {
             os << start << ") ";

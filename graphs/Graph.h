@@ -15,6 +15,7 @@ public:
     unsigned int arcs_count;
 
 public:
+    // Constructor
     explicit Graph(const std::set<Edge> &_edges) {
         edges = _edges;
         vertices_count = GetVerticesCount();
@@ -23,6 +24,7 @@ public:
         arcs_count = GetArcsCount();
     }
 
+    // Output override
     friend std::ostream &operator<<(std::ostream &os, const Graph &graph) {
         os << "\tStart\tEnd\n";
 
@@ -34,6 +36,7 @@ public:
         return os;
     }
 
+    // Gets in degree of graph
     [[nodiscard]] unsigned int GetInDegree(unsigned int vertex) const {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
@@ -48,6 +51,7 @@ public:
         return count;
     }
 
+    // Gets out degree of graph
     [[nodiscard]] unsigned int GetOutDegree(unsigned int vertex) const {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
@@ -62,6 +66,7 @@ public:
         return count;
     }
 
+    // Gets degree of graph
     [[nodiscard]] unsigned int GetDegree(unsigned int vertex) const {
         if (!HasVertex(vertex)) {
             throw std::invalid_argument("Wrong vertex passed");
@@ -71,12 +76,11 @@ public:
     }
 
 private:
+    // Gets number of arcs in graph
     unsigned int GetArcsCount() {
         unsigned int count = 0;
 
         for (auto edge1: edges) {
-            bool found = false;
-
             for (const auto &edge2: edges) {
                 if (edge1.IsArcWith(edge2)) {
                     count++;
@@ -88,6 +92,7 @@ private:
         return count / 2;
     }
 
+    // Checks if graph is directed
     bool CheckDirectionality() {
         for (auto edge1: edges) {
             bool found = false;
@@ -107,6 +112,7 @@ private:
         return true;
     }
 
+    // Gets number of vertices in graph
     unsigned int GetVerticesCount() {
         unsigned int max_vertex = 0;
         for (const Edge &edge: edges) {
@@ -115,7 +121,8 @@ private:
         return max_vertex;
     }
 
-    bool HasVertex(unsigned int vertex) const {
+    // Checks if graph has given vertex
+    [[nodiscard]] bool HasVertex(unsigned int vertex) const {
         return vertex != 0 && vertex <= vertices_count;
     }
 };

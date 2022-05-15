@@ -16,12 +16,14 @@ private:
     std::string input_file_name, output_file_name;
 
 public:
+    // Constructor
     App(const std::string &_input_file_name, const std::string &_output_file_name) {
         input_file_name = _input_file_name;
         output_file_name = _output_file_name;
     }
 
-    void Start() {
+    // Main program loop
+    [[noreturn]] void Start() {
         while (true) {
             Graph graph = GetGraph();
 
@@ -35,7 +37,7 @@ public:
     }
 
 private:
-
+    // Gets graph from user
     Graph GetGraph() {
         std::cout << "1) From console\n2) From file\n\nEnter input type:\n";
         unsigned int input_type;
@@ -68,6 +70,7 @@ private:
         }
     }
 
+    // Gets action number from user
     static unsigned int GetAction(const Graph &graph) {
         std::cout << "Options:\n";
 
@@ -92,6 +95,7 @@ private:
         return action;
     }
 
+    // Does action that was passed
     bool DoAction(unsigned int action, const Graph &graph) {
         switch (action) {
             case 1: {
@@ -143,6 +147,7 @@ private:
         return true;
     }
 
+    // Outputs given graph to console of file
     template<class GraphType>
     void OutputGraph(const GraphType &graph) {
         std::cout << "1) To console\n2) To file\n\nEnter output type:\n";
@@ -154,6 +159,7 @@ private:
         stream << "Representation as " << typeid(GraphType).name() << "\n\n" << graph;
     }
 
+    // Gets Adjacency matrix from user
     static AdjacencyMatrix GetAdjacencyMatrix(std::istream &stream) {
         unsigned int vertex_count;
         unsigned int exist;
@@ -177,6 +183,7 @@ private:
         return graph;
     }
 
+    // Gets Incidence matrix from user
     static IncidenceMatrix GetIncidenceMatrix(std::istream &stream) {
         unsigned int vertex_count, edges_count;
         int exist;
@@ -223,6 +230,7 @@ private:
         return graph;
     }
 
+    // Gets Adjacency list from user
     static AdjacencyList GetAdjacencyList(std::istream &stream) {
         unsigned int edges_count;
         unsigned int start, end;
@@ -241,6 +249,7 @@ private:
         return graph;
     }
 
+    // Gets Edge list from user
     static EdgeList GetEdgeList(std::istream &stream) {
         unsigned int vertices_count;
         unsigned int count, vertex;

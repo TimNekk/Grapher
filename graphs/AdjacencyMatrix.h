@@ -10,7 +10,9 @@ public:
     std::vector<std::vector<bool>> matrix;
 
 public:
+    // Constructor
     explicit AdjacencyMatrix(const std::set<Edge> &_edges) : Graph(_edges) {
+        // Creating empty matrix
         for (unsigned int i = 0; i < vertices_count; ++i) {
             std::vector<bool> row;
             row.reserve(vertices_count);
@@ -20,16 +22,19 @@ public:
             matrix.push_back(row);
         }
 
+        // Filling matrix
         for (const Edge &edge: _edges) {
             matrix[edge.start - 1][edge.end - 1] = true;
         }
     }
 
+    // Converting from graph
     static AdjacencyMatrix FromGraph(const Graph &graph) {
         AdjacencyMatrix adjacency_matrix{graph.edges};
         return adjacency_matrix;
     }
 
+    // Output override
     friend std::ostream &operator<<(std::ostream &os, const AdjacencyMatrix &graph) {
         for (int i = 0; i < graph.vertices_count; ++i) {
             os << '\t' << i + 1;

@@ -9,7 +9,9 @@ public:
     std::vector<std::vector<int>> matrix;
 
 public:
+    // Constructor
     explicit IncidenceMatrix(const std::set<Edge> &_edges) : Graph(_edges) {
+        // Filling vector with zeros
         matrix = Utilities::FillVector2D(vertices_count, edges_count - arcs_count, 0);
 
         std::set<Edge> added_edges;
@@ -21,6 +23,7 @@ public:
 
             bool has_pair = false;
 
+            // Find pair edge
             for (const Edge &edge2: _edges) {
                 if (!added_edges.contains(edge2) && edge.IsArcWith(edge2)) {
                     added_edges.insert(edge2);
@@ -36,11 +39,13 @@ public:
         }
     }
 
+    // Converting from graph
     static IncidenceMatrix FromGraph(const Graph &graph) {
         IncidenceMatrix incidence_matrix{graph.edges};
         return incidence_matrix;
     }
 
+    // Output override
     friend std::ostream &operator<<(std::ostream &os, const IncidenceMatrix &graph) {
         for (int i = 0; i < graph.edges_count - graph.arcs_count; ++i) {
             os << '\t' << i + 1;

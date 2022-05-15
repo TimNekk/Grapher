@@ -6,6 +6,7 @@
 
 class Utilities {
 public:
+    // Fills given 2D vector with given values
     template<class T>
     static std::vector<std::vector<T>> FillVector2D(unsigned int rows_count, unsigned int columns_count, T fill_value) {
         std::vector<std::vector<T>> matrix;
