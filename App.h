@@ -9,14 +9,14 @@
 #include "graphs/AdjacencyMatrix.h"
 #include "graphs/IncidenceMatrix.h"
 #include "graphs/AdjacencyList.h"
-#include "graphs/EdgesList.h"
+#include "graphs/EdgeList.h"
 
 class App {
 private:
     std::string input_file_name, output_file_name;
 
 public:
-    App(const std::string _input_file_name, const std::string _output_file_name) {
+    App(const std::string& _input_file_name, const std::string& _output_file_name) {
         input_file_name = _input_file_name;
         output_file_name = _output_file_name;
     }
@@ -63,7 +63,7 @@ private:
                 return GetAdjacencyList(stream);
             }
             case 4: {
-                return GetEdgesList(stream);
+                return GetEdgeList(stream);
             }
         }
     }
@@ -82,7 +82,7 @@ private:
         std::cout << "3) Show as Adjacency matrix\n";
         std::cout << "4) Show as Incidence matrix\n";
         std::cout << "5) Show as Adjacency list\n";
-        std::cout << "6) Show as Edges list\n";
+        std::cout << "6) Show as Edge list\n";
         std::cout << "7) Enter new graph\n";
         std::cout << "8) Stop program\n";
         std::cout << "\nEnter the option number:\n";
@@ -130,7 +130,7 @@ private:
                 return true;
             }
             case 6: {
-                OutputGraph(EdgesList::FromGraph(graph));
+                OutputGraph(EdgeList::FromGraph(graph));
                 return true;
             }
             case 7: {
@@ -241,7 +241,7 @@ private:
         return graph;
     }
 
-    static EdgesList GetEdgesList(std::istream &stream) {
+    static EdgeList GetEdgeList(std::istream &stream) {
         unsigned int vertices_count;
         unsigned int count, vertex;
         std::set<Edge> edges;
@@ -259,7 +259,7 @@ private:
             }
         }
 
-        EdgesList graph {edges};
+        EdgeList graph {edges};
         return graph;
     }
 };

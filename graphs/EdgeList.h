@@ -1,16 +1,16 @@
-#ifndef GRAPHER_EDGESLIST_H
-#define GRAPHER_EDGESLIST_H
+#ifndef GRAPHER_EDGELIST_H
+#define GRAPHER_EDGELIST_H
 
 #include "Graph.h"
 #include "map"
 
 
-class EdgesList : public Graph {
+class EdgeList : public Graph {
 public:
     std::map<unsigned int, std::set<unsigned int>> map;
 
 public:
-    explicit EdgesList(const std::set<Edge> &_edges) : Graph(_edges) {
+    explicit EdgeList(const std::set<Edge> &_edges) : Graph(_edges) {
         for (const Edge &edge: _edges) {
             if (map.contains(edge.start)) {
                 map[edge.start].insert(edge.end);
@@ -20,12 +20,12 @@ public:
         }
     }
 
-    static EdgesList FromGraph(const Graph &graph) {
-        EdgesList edges_list{graph.edges};
-        return edges_list;
+    static EdgeList FromGraph(const Graph &graph) {
+        EdgeList edge_list{graph.edges};
+        return edge_list;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const EdgesList &graph) {
+    friend std::ostream &operator<<(std::ostream &os, const EdgeList &graph) {
         for (const auto &[start, ends] : graph.map) {
             os << start << ") ";
 
