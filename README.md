@@ -41,8 +41,8 @@ CLI tool that works with graphs
 0 0 1 1 -1
 ```
 
-#### Adjacency list
-![Adjacency matrix](images/AdjacencyList.png)
+#### Edge list
+![Edge list](images/AdjacencyList.png)
 ```
 7
 1 2
@@ -54,8 +54,8 @@ CLI tool that works with graphs
 4 3
 ```
 
-#### Edge list
-![Adjacency matrix](images/EdgeList.png)
+#### Adjacency list
+![Adjacency list](images/EdgeList.png)
 ```
 4
 2 2 4

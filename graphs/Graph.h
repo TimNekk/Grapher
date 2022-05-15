@@ -105,11 +105,11 @@ private:
             }
 
             if (!found) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     // Gets number of vertices in graph

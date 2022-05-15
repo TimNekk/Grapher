@@ -8,8 +8,8 @@
 #include "graphs/Graph.h"
 #include "graphs/AdjacencyMatrix.h"
 #include "graphs/IncidenceMatrix.h"
-#include "graphs/AdjacencyList.h"
 #include "graphs/EdgeList.h"
+#include "graphs/AdjacencyList.h"
 
 class App {
 private:
@@ -241,7 +241,7 @@ private:
     }
 
     // Gets Adjacency list from user
-    static AdjacencyList GetAdjacencyList(std::istream &stream) {
+    static EdgeList GetEdgeList(std::istream &stream) {
         unsigned int edges_count;
         unsigned int start, end;
         std::set<Edge> edges;
@@ -255,12 +255,12 @@ private:
             edges.insert({start, end});
         }
 
-        AdjacencyList graph{edges};
+        EdgeList graph{edges};
         return graph;
     }
 
     // Gets Edge list from user
-    static EdgeList GetEdgeList(std::istream &stream) {
+    static AdjacencyList GetAdjacencyList(std::istream &stream) {
         unsigned int vertices_count;
         unsigned int count, vertex;
         std::set<Edge> edges;
@@ -279,7 +279,7 @@ private:
             }
         }
 
-        EdgeList graph{edges};
+        AdjacencyList graph{edges};
         return graph;
     }
 };
